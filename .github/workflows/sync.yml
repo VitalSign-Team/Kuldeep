@@ -30,8 +30,8 @@ jobs:
         run: |
           git push "https://x-access-token:${TOKEN}@github.com/VitalSign-Team/Satya.git" HEAD:main --force
 
-      - name: Sync to Raksht
+      - name: Sync to Rakshit
         env:
           TOKEN: ${{ secrets.VITALSIGN_SYNC_TOKEN }}
         run: |
-          git push "https://x-access-token:${TOKEN}@github.com/VitalSign-Team/Raksht.git" HEAD:main --force
+          git push "https://x-access-token:${TOKEN}@github.com/VitalSign-Team/Rakshit.git" HEAD:main --force
