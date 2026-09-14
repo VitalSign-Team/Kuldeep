@@ -1,0 +1,38 @@
+name: Sync VitalSign Team Repositories
+
+on:
+  push:
+    branches:
+      - main
+
+permissions:
+  contents: read
+
+jobs:
+  sync:
+    runs-on: ubuntu-latest
+
+    steps:
+      - name: Checkout repository
+        uses: actions/checkout@v4
+        with:
+          fetch-depth: 0
+
+      - name: Configure Git
+        run: |
+          git config user.name "VitalSign Sync Bot"
+          git config user.email "actions@github.com"
+
+      - name: Sync to Satya
+        env:
+          TOKEN: ${{ secrets.VITALSIGN_SYNC_TOKEN }}
+        run: |
+          git remote add satya https://x-access-token:${TOKEN}@github.com/VitalSign-Team/Satya.git
+          git push satya HEAD:main --force
+
+      - name: Sync to Raksht
+        env:
+          TOKEN: ${{ secrets.VITALSIGN_SYNC_TOKEN }}
+        run: |
+          git remote add raksht https://x-access-token:${TOKEN}@github.com/VitalSign-Team/Raksht.git
+          git push raksht HEAD:main --force
