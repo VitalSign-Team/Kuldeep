@@ -1,0 +1,2578 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+
+    <title>{{ title if title else "VitalSign" }}</title>
+
+    <link rel="stylesheet"
+          href="{{ url_for('static', filename='style.css') }}">
+
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+
+    <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700;800&display=swap"
+          rel="stylesheet">
+</head>
+
+<body>
+
+<div class="app-container">
+
+    <!-- ========================================================= -->
+    <!-- SIDEBAR -->
+    <!-- ========================================================= -->
+
+    <aside class="sidebar">
+
+        <div class="sidebar-inner">
+
+            <!-- LOGO -->
+            <div class="brand">
+
+                <div class="brand-icon">
+                    🏥
+                </div>
+
+                <div class="brand-text">
+                    <h2>VitalSign</h2>
+                    <span>Healthcare Analytics</span>
+                </div>
+
+            </div>
+
+
+            <!-- ================================================= -->
+            <!-- NAVIGATION -->
+            <!-- ================================================= -->
+
+            <nav class="sidebar-nav">
+
+                <!-- MAIN MENU -->
+                <div class="nav-section">
+
+                    <div class="nav-title">
+                        MAIN MENU
+                    </div>
+
+                    <a href="{{ url_for('home') }}"
+                       class="nav-item {% if active == 'dashboard' %}active{% endif %}">
+                        <span class="nav-icon">🏠</span>
+                        <span>Dashboard</span>
+                    </a>
+
+                    <a href="{{ url_for('dataset') }}"
+                       class="nav-item {% if active == 'dataset' %}active{% endif %}">
+                        <span class="nav-icon">📊</span>
+                        <span>Dataset</span>
+                    </a>
+
+                    <a href="{{ url_for('data_loading') }}"
+                       class="nav-item {% if active == 'data-loading' %}active{% endif %}">
+                        <span class="nav-icon">📂</span>
+                        <span>Data Loading</span>
+                    </a>
+
+                    <a href="{{ url_for('eda') }}"
+                       class="nav-item {% if active == 'eda' %}active{% endif %}">
+                        <span class="nav-icon">🔍</span>
+                        <span>EDA</span>
+                    </a>
+
+                    <a href="{{ url_for('preprocessing') }}"
+                       class="nav-item {% if active == 'preprocessing' %}active{% endif %}">
+                        <span class="nav-icon">⚙️</span>
+                        <span>Preprocessing</span>
+                    </a>
+
+                </div>
+
+
+                <!-- SUPERVISED LEARNING -->
+                <div class="nav-section">
+
+                    <div class="nav-title">
+                        SUPERVISED LEARNING
+                    </div>
+
+                    <a href="{{ url_for('linear_regression') }}"
+                       class="nav-item {% if active == 'linear-regression' %}active{% endif %}">
+                        <span class="nav-icon">📈</span>
+                        <span>Linear Regression</span>
+                    </a>
+
+                    <a href="{{ url_for('logistic_regression') }}"
+                       class="nav-item {% if active == 'logistic-regression' %}active{% endif %}">
+                        <span class="nav-icon">🤖</span>
+                        <span>Logistic Regression</span>
+                    </a>
+
+                    <a href="{{ url_for('decision_tree') }}"
+                       class="nav-item {% if active == 'decision-tree' %}active{% endif %}">
+                        <span class="nav-icon">🌳</span>
+                        <span>Decision Tree</span>
+                    </a>
+
+                    <a href="{{ url_for('gradient_boosting') }}"
+                       class="nav-item {% if active == 'gradient-boosting' %}active{% endif %}">
+                        <span class="nav-icon">🚀</span>
+                        <span>Gradient Boosting</span>
+                    </a>
+
+                    <a href="{{ url_for('adaboost') }}"
+                       class="nav-item {% if active == 'adaboost' %}active{% endif %}">
+                        <span class="nav-icon">⚡</span>
+                        <span>AdaBoost</span>
+                    </a>
+
+                    <a href="{{ url_for('bagging') }}"
+                       class="nav-item {% if active == 'bagging' %}active{% endif %}">
+                        <span class="nav-icon">🧺</span>
+                        <span>Bagging</span>
+                    </a>
+
+                </div>
+
+
+                <!-- UNSUPERVISED LEARNING -->
+                <div class="nav-section">
+
+                    <div class="nav-title">
+                        UNSUPERVISED LEARNING
+                    </div>
+
+                    <a href="{{ url_for('kmeans') }}"
+                       class="nav-item {% if active == 'k-means' %}active{% endif %}">
+                        <span class="nav-icon">🔵</span>
+                        <span>K-Means</span>
+                    </a>
+
+                    <a href="{{ url_for('kmeans_elbow') }}"
+                       class="nav-item {% if active == 'k-means-elbow' %}active{% endif %}">
+                        <span class="nav-icon">📐</span>
+                        <span>Elbow Method</span>
+                    </a>
+
+                </div>
+
+
+                <!-- PROJECT -->
+                <div class="nav-section">
+
+                    <div class="nav-title">
+                        PROJECT
+                    </div>
+
+                    <a href="{{ url_for('model_comparison') }}"
+                       class="nav-item {% if active == 'model-comparison' %}active{% endif %}">
+                        <span class="nav-icon">🏆</span>
+                        <span>Model Comparison</span>
+                    </a>
+
+                    <a href="{{ url_for('about') }}"
+                       class="nav-item {% if active == 'about' %}active{% endif %}">
+                        <span class="nav-icon">ℹ️</span>
+                        <span>About Project</span>
+                    </a>
+
+                </div>
+
+            </nav>
+
+
+            <!-- SYSTEM STATUS -->
+            <div class="system-status">
+
+                <div class="status-dot"></div>
+
+                <div>
+                    <strong>System Online</strong>
+                    <span>VitalSign ML Engine</span>
+                </div>
+
+            </div>
+
+        </div>
+
+    </aside>
+
+
+    <!-- ========================================================= -->
+    <!-- MAIN CONTENT -->
+    <!-- ========================================================= -->
+
+    <main class="main-content">
+
+
+        <!-- TOP BAR -->
+
+        <header class="topbar">
+
+            <div class="breadcrumb">
+                <span>VitalSign</span>
+                <span class="separator">/</span>
+                <span>
+                    {% if active == 'dashboard' %}
+                        Dashboard
+                    {% elif active == 'dataset' %}
+                        Dataset
+                    {% elif active == 'data-loading' %}
+                        Data Loading
+                    {% elif active == 'eda' %}
+                        Exploratory Data Analysis
+                    {% elif active == 'preprocessing' %}
+                        Preprocessing
+                    {% elif active == 'linear-regression' %}
+                        Linear Regression
+                    {% elif active == 'logistic-regression' %}
+                        Logistic Regression
+                    {% elif active == 'decision-tree' %}
+                        Decision Tree
+                    {% elif active == 'gradient-boosting' %}
+                        Gradient Boosting
+                    {% elif active == 'adaboost' %}
+                        AdaBoost
+                    {% elif active == 'bagging' %}
+                        Bagging
+                    {% elif active == 'k-means' %}
+                        K-Means
+                    {% elif active == 'k-means-elbow' %}
+                        Elbow Method
+                    {% elif active == 'model-comparison' %}
+                        Model Comparison
+                    {% elif active == 'about' %}
+                        About Project
+                    {% else %}
+                        Healthcare Analytics
+                    {% endif %}
+                </span>
+            </div>
+
+            <div class="system-running">
+                <span class="running-dot"></span>
+                System Running
+            </div>
+
+        </header>
+
+
+        <!-- ========================================================= -->
+        <!-- DASHBOARD -->
+        <!-- ========================================================= -->
+
+        {% if active == 'dashboard' %}
+
+        <section class="page-header">
+
+            <div class="eyebrow">
+                🏥 HEALTHCARE INTELLIGENCE
+            </div>
+
+            <h1>VitalSign Dashboard</h1>
+
+            <p>
+                Analyze healthcare data using preprocessing,
+                regression, classification and clustering techniques.
+            </p>
+
+        </section>
+
+
+        <!-- HERO -->
+
+        <section class="hero-card">
+
+            <div class="hero-content">
+
+                <div class="hero-label">
+                    REAL DATA ANALYTICS
+                </div>
+
+                <h2>
+                    Healthcare Data.<br>
+                    <span>Machine Learning.</span><br>
+                    Real Insights.
+                </h2>
+
+                <p>
+                    VitalSign analyzes the Diabetes 130-US Hospitals
+                    dataset using machine learning techniques to
+                    understand patient readmission patterns.
+                </p>
+
+                <div class="hero-tags">
+
+                    <span>📊 EDA</span>
+                    <span>⚙️ Preprocessing</span>
+                    <span>🤖 ML Models</span>
+                    <span>🔵 Clustering</span>
+
+                </div>
+
+            </div>
+
+            <div class="hero-decoration">
+
+                <div class="medical-icon">
+                    🩺
+                </div>
+
+            </div>
+
+        </section>
+
+
+        <!-- PROJECT STATISTICS -->
+
+        <section class="stats-grid">
+
+
+            <!-- RECORDS -->
+
+            <div class="stat-card">
+
+                <div class="stat-icon blue">
+                    🗃️
+                </div>
+
+                <div class="stat-info">
+
+                    <span class="stat-label">
+                        Records
+                    </span>
+
+                    <strong>
+                        {{ "{:,}".format(summary.rows) if summary is defined else "0" }}
+                    </strong>
+
+                    <small>
+                        Healthcare encounters
+                    </small>
+
+                </div>
+
+            </div>
+
+
+            <!-- FEATURES -->
+
+            <div class="stat-card">
+
+                <div class="stat-icon purple">
+                    📋
+                </div>
+
+                <div class="stat-info">
+
+                    <span class="stat-label">
+                        Features
+                    </span>
+
+                    <strong>
+                        {{ summary.columns if summary is defined else "0" }}
+                    </strong>
+
+                    <small>
+                        Dataset variables
+                    </small>
+
+                </div>
+
+            </div>
+
+
+            <!-- MISSING DATA -->
+
+            <div class="stat-card">
+
+                <div class="stat-icon yellow">
+                    ❓
+                </div>
+
+                <div class="stat-info">
+
+                    <span class="stat-label">
+                        Missing Data
+                    </span>
+
+                    <strong>
+                        {{ summary.missing_percentage if summary is defined else "0" }}%
+                    </strong>
+
+                    <small>
+                        Missing data across cells
+                    </small>
+
+                </div>
+
+            </div>
+
+
+            <!-- ML MODELS -->
+
+            <div class="stat-card">
+
+                <div class="stat-icon green">
+                    🤖
+                </div>
+
+                <div class="stat-info">
+
+                    <span class="stat-label">
+                        ML Models
+                    </span>
+
+                    <strong>
+                        6
+                    </strong>
+
+                    <small>
+                        Supervised models
+                    </small>
+
+                </div>
+
+            </div>
+
+        </section>
+
+
+        <!-- DATASET PREVIEW -->
+
+        <section class="content-card">
+
+            <div class="card-header">
+
+                <div>
+
+                    <span class="section-label">
+                        DATASET
+                    </span>
+
+                    <h2>
+                        📋 Dataset Preview
+                    </h2>
+
+                </div>
+
+                <a href="{{ url_for('dataset') }}"
+                   class="small-button">
+                    Live CSV
+                </a>
+
+            </div>
+
+
+            {% if data is defined and data is not none %}
+
+            <div class="table-wrapper">
+                {{ data|safe }}
+            </div>
+
+            {% elif preview is defined and preview %}
+
+            <div class="table-wrapper">
+
+                <table class="data-table">
+
+                    <thead>
+
+                    <tr>
+
+                        {% for column in columns %}
+
+                        <th>
+                            {{ column }}
+                        </th>
+
+                        {% endfor %}
+
+                    </tr>
+
+                    </thead>
+
+                    <tbody>
+
+                    {% for row in preview %}
+
+                    <tr>
+
+                        {% for column in columns %}
+
+                        <td>
+                            {{ row[column] }}
+                        </td>
+
+                        {% endfor %}
+
+                    </tr>
+
+                    {% endfor %}
+
+                    </tbody>
+
+                </table>
+
+            </div>
+
+            {% else %}
+
+            <div class="empty-state">
+
+                <div class="empty-icon">
+                    📊
+                </div>
+
+                <h3>
+                    Dataset Preview
+                </h3>
+
+                <p>
+                    Open the Dataset page to explore the
+                    healthcare dataset.
+                </p>
+
+                <a href="{{ url_for('dataset') }}"
+                   class="primary-button">
+                    View Dataset →
+                </a>
+
+            </div>
+
+            {% endif %}
+
+        </section>
+
+
+        <!-- WORKFLOW -->
+
+        <section class="content-card">
+
+            <div class="card-header">
+
+                <div>
+
+                    <span class="section-label">
+                        ANALYTICS PIPELINE
+                    </span>
+
+                    <h2>
+                        🔬 Machine Learning Workflow
+                    </h2>
+
+                </div>
+
+            </div>
+
+
+            <div class="workflow-grid">
+
+
+                <div class="workflow-card">
+
+                    <div class="workflow-number">
+                        01
+                    </div>
+
+                    <div class="workflow-icon">
+                        📊
+                    </div>
+
+                    <h3>
+                        Exploratory Analysis
+                    </h3>
+
+                    <p>
+                        Understand dataset structure,
+                        distributions and patterns.
+                    </p>
+
+                </div>
+
+
+                <div class="workflow-card">
+
+                    <div class="workflow-number">
+                        02
+                    </div>
+
+                    <div class="workflow-icon">
+                        ⚙️
+                    </div>
+
+                    <h3>
+                        Preprocessing
+                    </h3>
+
+                    <p>
+                        Handle missing values, encode
+                        features and prepare the data.
+                    </p>
+
+                </div>
+
+
+                <div class="workflow-card">
+
+                    <div class="workflow-number">
+                        03
+                    </div>
+
+                    <div class="workflow-icon">
+                        🤖
+                    </div>
+
+                    <h3>
+                        Machine Learning
+                    </h3>
+
+                    <p>
+                        Apply regression and classification
+                        algorithms to the dataset.
+                    </p>
+
+                </div>
+
+
+                <div class="workflow-card">
+
+                    <div class="workflow-number">
+                        04
+                    </div>
+
+                    <div class="workflow-icon">
+                        🔵
+                    </div>
+
+                    <h3>
+                        Clustering
+                    </h3>
+
+                    <p>
+                        Discover hidden groups using
+                        K-Means clustering.
+                    </p>
+
+                </div>
+
+            </div>
+
+        </section>
+
+        {% endif %}
+
+
+
+        <!-- ========================================================= -->
+        <!-- DATASET -->
+        <!-- ========================================================= -->
+
+        {% if active == 'dataset' %}
+
+        <section class="page-header">
+
+            <div class="eyebrow">
+                📊 DATA EXPLORATION
+            </div>
+
+            <h1>Healthcare Dataset</h1>
+
+            <p>
+                Explore the Diabetes 130-US Hospitals dataset
+                used by VitalSign.
+            </p>
+
+        </section>
+
+
+        <section class="stats-grid">
+
+            <div class="stat-card">
+
+                <div class="stat-icon blue">🗃️</div>
+
+                <div class="stat-info">
+
+                    <span class="stat-label">
+                        Records
+                    </span>
+
+                    <strong>
+                        {{ "{:,}".format(summary.rows) }}
+                    </strong>
+
+                    <small>
+                        Total rows
+                    </small>
+
+                </div>
+
+            </div>
+
+
+            <div class="stat-card">
+
+                <div class="stat-icon purple">📋</div>
+
+                <div class="stat-info">
+
+                    <span class="stat-label">
+                        Features
+                    </span>
+
+                    <strong>
+                        {{ summary.columns }}
+                    </strong>
+
+                    <small>
+                        Dataset columns
+                    </small>
+
+                </div>
+
+            </div>
+
+
+            <div class="stat-card">
+
+                <div class="stat-icon yellow">❓</div>
+
+                <div class="stat-info">
+
+                    <span class="stat-label">
+                        Missing Data
+                    </span>
+
+                    <strong>
+                        {{ summary.missing_percentage }}%
+                    </strong>
+
+                    <small>
+                        Missing cells
+                    </small>
+
+                </div>
+
+            </div>
+
+
+            <div class="stat-card">
+
+                <div class="stat-icon green">♻️</div>
+
+                <div class="stat-info">
+
+                    <span class="stat-label">
+                        Duplicates
+                    </span>
+
+                    <strong>
+                        {{ "{:,}".format(summary.duplicates) }}
+                    </strong>
+
+                    <small>
+                        Duplicate rows
+                    </small>
+
+                </div>
+
+            </div>
+
+        </section>
+
+
+        <section class="content-card">
+
+            <div class="card-header">
+
+                <div>
+
+                    <span class="section-label">
+                        RAW DATA
+                    </span>
+
+                    <h2>
+                        📋 Dataset Preview
+                    </h2>
+
+                </div>
+
+            </div>
+
+            {% if data is defined %}
+
+            <div class="table-wrapper">
+                {{ data|safe }}
+            </div>
+
+            {% endif %}
+
+        </section>
+
+        {% endif %}
+
+
+
+        <!-- ========================================================= -->
+        <!-- DATA LOADING -->
+        <!-- ========================================================= -->
+
+        {% if active == 'data-loading' %}
+
+        <section class="page-header">
+
+            <div class="eyebrow">
+                📂 DATA PIPELINE
+            </div>
+
+            <h1>Data Loading</h1>
+
+            <p>
+                Load and inspect the healthcare dataset before
+                applying machine learning techniques.
+            </p>
+
+        </section>
+
+
+        <section class="stats-grid">
+
+            <div class="stat-card">
+
+                <div class="stat-icon blue">
+                    🗃️
+                </div>
+
+                <div class="stat-info">
+
+                    <span class="stat-label">
+                        Records
+                    </span>
+
+                    <strong>
+                        {{ "{:,}".format(summary.rows) }}
+                    </strong>
+
+                    <small>
+                        Loaded records
+                    </small>
+
+                </div>
+
+            </div>
+
+
+            <div class="stat-card">
+
+                <div class="stat-icon purple">
+                    📋
+                </div>
+
+                <div class="stat-info">
+
+                    <span class="stat-label">
+                        Features
+                    </span>
+
+                    <strong>
+                        {{ summary.columns }}
+                    </strong>
+
+                    <small>
+                        Available variables
+                    </small>
+
+                </div>
+
+            </div>
+
+
+            <div class="stat-card">
+
+                <div class="stat-icon yellow">
+                    ❓
+                </div>
+
+                <div class="stat-info">
+
+                    <span class="stat-label">
+                        Missing Data
+                    </span>
+
+                    <strong>
+                        {{ summary.missing_percentage }}%
+                    </strong>
+
+                    <small>
+                        Across all cells
+                    </small>
+
+                </div>
+
+            </div>
+
+
+            <div class="stat-card">
+
+                <div class="stat-icon green">
+                    ✅
+                </div>
+
+                <div class="stat-info">
+
+                    <span class="stat-label">
+                        Status
+                    </span>
+
+                    <strong>
+                        Ready
+                    </strong>
+
+                    <small>
+                        Dataset loaded
+                    </small>
+
+                </div>
+
+            </div>
+
+        </section>
+
+
+        <section class="content-card">
+
+            <div class="card-header">
+
+                <div>
+
+                    <span class="section-label">
+                        LOADED DATA
+                    </span>
+
+                    <h2>
+                        📋 Records Preview
+                    </h2>
+
+                </div>
+
+            </div>
+
+
+            {% if preview %}
+
+            <div class="table-wrapper">
+
+                <table class="data-table">
+
+                    <thead>
+
+                    <tr>
+
+                        {% for column in columns %}
+
+                        <th>
+                            {{ column }}
+                        </th>
+
+                        {% endfor %}
+
+                    </tr>
+
+                    </thead>
+
+                    <tbody>
+
+                    {% for row in preview %}
+
+                    <tr>
+
+                        {% for column in columns %}
+
+                        <td>
+                            {{ row[column] }}
+                        </td>
+
+                        {% endfor %}
+
+                    </tr>
+
+                    {% endfor %}
+
+                    </tbody>
+
+                </table>
+
+            </div>
+
+            {% endif %}
+
+        </section>
+
+        {% endif %}
+
+
+
+        <!-- ========================================================= -->
+        <!-- EDA -->
+        <!-- ========================================================= -->
+
+        {% if active == 'eda' %}
+
+        <section class="page-header">
+
+            <div class="eyebrow">
+                🔍 EXPLORATORY DATA ANALYSIS
+            </div>
+
+            <h1>Exploratory Data Analysis</h1>
+
+            <p>
+                Visualize healthcare data distributions,
+                relationships and patterns.
+            </p>
+
+        </section>
+
+
+        {% if images %}
+
+        <section class="results-grid">
+
+            {% for name, image in images.items() %}
+
+            <div class="content-card chart-card">
+
+                <div class="card-header">
+
+                    <div>
+
+                        <span class="section-label">
+                            VISUALIZATION
+                        </span>
+
+                        <h2>
+                            {{ name }}
+                        </h2>
+
+                    </div>
+
+                </div>
+
+                <img src="data:image/png;base64,{{ image }}"
+                     alt="{{ name }}"
+                     class="result-image">
+
+            </div>
+
+            {% endfor %}
+
+        </section>
+
+        {% else %}
+
+        <section class="content-card">
+
+            <div class="empty-state">
+
+                <div class="empty-icon">
+                    📊
+                </div>
+
+                <h3>
+                    No visualizations available
+                </h3>
+
+                <p>
+                    EDA visualizations will appear here.
+                </p>
+
+            </div>
+
+        </section>
+
+        {% endif %}
+
+        {% endif %}
+
+
+
+        <!-- ========================================================= -->
+        <!-- PREPROCESSING -->
+        <!-- ========================================================= -->
+
+        {% if active == 'preprocessing' %}
+
+        <section class="page-header">
+
+            <div class="eyebrow">
+                ⚙️ DATA PREPROCESSING
+            </div>
+
+            <h1>Preprocessing</h1>
+
+            <p>
+                Prepare the placement dataset for machine learning
+                and clustering analysis.
+            </p>
+
+        </section>
+
+
+        {% if data %}
+
+        <section class="stats-grid">
+
+            {% if data.rows is defined %}
+
+            <div class="stat-card">
+
+                <div class="stat-icon blue">
+                    🗃️
+                </div>
+
+                <div class="stat-info">
+
+                    <span class="stat-label">
+                        Rows
+                    </span>
+
+                    <strong>
+                        {{ "{:,}".format(data.rows) }}
+                    </strong>
+
+                    <small>
+                        Processed records
+                    </small>
+
+                </div>
+
+            </div>
+
+            {% endif %}
+
+
+            {% if data.columns is defined %}
+
+            <div class="stat-card">
+
+                <div class="stat-icon purple">
+                    📋
+                </div>
+
+                <div class="stat-info">
+
+                    <span class="stat-label">
+                        Features
+                    </span>
+
+                    <strong>
+                        {{ data.columns }}
+                    </strong>
+
+                    <small>
+                        Processed features
+                    </small>
+
+                </div>
+
+            </div>
+
+            {% endif %}
+
+
+            {% if data.outliers is defined %}
+
+            <div class="stat-card">
+
+                <div class="stat-icon yellow">
+                    ⚠️
+                </div>
+
+                <div class="stat-info">
+
+                    <span class="stat-label">
+                        Outliers
+                    </span>
+
+                    <strong>
+                        {{ data.outliers }}
+                    </strong>
+
+                    <small>
+                        Detected observations
+                    </small>
+
+                </div>
+
+            </div>
+
+            {% endif %}
+
+        </section>
+
+
+        <section class="content-card">
+
+            <div class="card-header">
+
+                <div>
+
+                    <span class="section-label">
+                        PREPROCESSING RESULT
+                    </span>
+
+                    <h2>
+                        ⚙️ Processing Details
+                    </h2>
+
+                </div>
+
+            </div>
+
+
+            <div class="result-grid">
+
+                {% for key, value in data.items() %}
+
+                {% if key != 'image' %}
+
+                <div class="result-item">
+
+                    <span>
+                        {{ key|replace("_", " ")|title }}
+                    </span>
+
+                    <strong>
+                        {{ value }}
+                    </strong>
+
+                </div>
+
+                {% endif %}
+
+                {% endfor %}
+
+            </div>
+
+
+            {% if data.image is defined %}
+
+            <img src="data:image/png;base64,{{ data.image }}"
+                 alt="Preprocessing visualization"
+                 class="result-image">
+
+            {% endif %}
+
+        </section>
+
+        {% else %}
+
+        <section class="content-card">
+
+            <div class="empty-state">
+
+                <div class="empty-icon">
+                    ⚙️
+                </div>
+
+                <h3>
+                    Preprocessing results unavailable
+                </h3>
+
+                <p>
+                    Run the preprocessing operation to view
+                    the results.
+                </p>
+
+            </div>
+
+        </section>
+
+        {% endif %}
+
+        {% endif %}
+
+
+
+        <!-- ========================================================= -->
+        <!-- LINEAR REGRESSION -->
+        <!-- ========================================================= -->
+
+        {% if active == 'linear-regression' %}
+
+        <section class="page-header">
+
+            <div class="eyebrow">
+                📈 SUPERVISED LEARNING
+            </div>
+
+            <h1>Linear Regression</h1>
+
+            <p>
+                Predict hospital stay duration using healthcare
+                numerical features.
+            </p>
+
+        </section>
+
+
+        {% if result %}
+
+        <section class="stats-grid">
+
+            <div class="stat-card">
+
+                <div class="stat-icon blue">
+                    📈
+                </div>
+
+                <div class="stat-info">
+
+                    <span class="stat-label">
+                        Model
+                    </span>
+
+                    <strong>
+                        Linear
+                    </strong>
+
+                    <small>
+                        Regression
+                    </small>
+
+                </div>
+
+            </div>
+
+
+            <div class="stat-card">
+
+                <div class="stat-icon purple">
+                    🎯
+                </div>
+
+                <div class="stat-info">
+
+                    <span class="stat-label">
+                        R² Score
+                    </span>
+
+                    <strong>
+                        {{ result.r2 }}
+                    </strong>
+
+                    <small>
+                        Model fit
+                    </small>
+
+                </div>
+
+            </div>
+
+
+            <div class="stat-card">
+
+                <div class="stat-icon yellow">
+                    📏
+                </div>
+
+                <div class="stat-info">
+
+                    <span class="stat-label">
+                        MAE
+                    </span>
+
+                    <strong>
+                        {{ result.mae }}
+                    </strong>
+
+                    <small>
+                        Mean absolute error
+                    </small>
+
+                </div>
+
+            </div>
+
+
+            <div class="stat-card">
+
+                <div class="stat-icon green">
+                    📐
+                </div>
+
+                <div class="stat-info">
+
+                    <span class="stat-label">
+                        MSE
+                    </span>
+
+                    <strong>
+                        {{ result.mse }}
+                    </strong>
+
+                    <small>
+                        Mean squared error
+                    </small>
+
+                </div>
+
+            </div>
+
+        </section>
+
+
+        <section class="content-card">
+
+            <div class="card-header">
+
+                <div>
+
+                    <span class="section-label">
+                        MODEL PERFORMANCE
+                    </span>
+
+                    <h2>
+                        📈 Regression Results
+                    </h2>
+
+                </div>
+
+            </div>
+
+
+            <div class="result-grid">
+
+                <div class="result-item">
+
+                    <span>
+                        Target
+                    </span>
+
+                    <strong>
+                        {{ result.target }}
+                    </strong>
+
+                </div>
+
+
+                <div class="result-item">
+
+                    <span>
+                        Training Samples
+                    </span>
+
+                    <strong>
+                        {{ result.train }}
+                    </strong>
+
+                </div>
+
+
+                <div class="result-item">
+
+                    <span>
+                        Testing Samples
+                    </span>
+
+                    <strong>
+                        {{ result.test }}
+                    </strong>
+
+                </div>
+
+            </div>
+
+
+            {% if result.features %}
+
+            <div class="feature-list">
+
+                <h3>
+                    Features Used
+                </h3>
+
+                {% for feature in result.features %}
+
+                <span class="tag">
+                    {{ feature }}
+                </span>
+
+                {% endfor %}
+
+            </div>
+
+            {% endif %}
+
+
+            {% if result.image %}
+
+            <img src="data:image/png;base64,{{ result.image }}"
+                 alt="Linear Regression Result"
+                 class="result-image">
+
+            {% endif %}
+
+        </section>
+
+        {% endif %}
+
+        {% endif %}
+
+
+
+        <!-- ========================================================= -->
+        <!-- CLASSIFICATION MODELS -->
+        <!-- ========================================================= -->
+
+        {% if active in [
+            'logistic-regression',
+            'decision-tree',
+            'gradient-boosting',
+            'adaboost',
+            'bagging'
+        ] %}
+
+        <section class="page-header">
+
+            <div class="eyebrow">
+                🤖 SUPERVISED LEARNING
+            </div>
+
+            <h1>
+                {{ result.name if result else "Classification Model" }}
+            </h1>
+
+            <p>
+                Predict patient readmission using machine learning
+                classification techniques.
+            </p>
+
+        </section>
+
+
+        {% if result %}
+
+        <section class="stats-grid">
+
+
+            <!-- ACCURACY -->
+
+            <div class="stat-card">
+
+                <div class="stat-icon green">
+                    🎯
+                </div>
+
+                <div class="stat-info">
+
+                    <span class="stat-label">
+                        Accuracy
+                    </span>
+
+                    <strong>
+                        {{ result.accuracy }}%
+                    </strong>
+
+                    <small>
+                        Test performance
+                    </small>
+
+                </div>
+
+            </div>
+
+
+            <!-- TRAIN -->
+
+            <div class="stat-card">
+
+                <div class="stat-icon blue">
+                    🏋️
+                </div>
+
+                <div class="stat-info">
+
+                    <span class="stat-label">
+                        Training Data
+                    </span>
+
+                    <strong>
+                        {{ "{:,}".format(result.train) }}
+                    </strong>
+
+                    <small>
+                        Training samples
+                    </small>
+
+                </div>
+
+            </div>
+
+
+            <!-- TEST -->
+
+            <div class="stat-card">
+
+                <div class="stat-icon purple">
+                    🧪
+                </div>
+
+                <div class="stat-info">
+
+                    <span class="stat-label">
+                        Test Data
+                    </span>
+
+                    <strong>
+                        {{ "{:,}".format(result.test) }}
+                    </strong>
+
+                    <small>
+                        Testing samples
+                    </small>
+
+                </div>
+
+            </div>
+
+
+            <!-- MODEL -->
+
+            <div class="stat-card">
+
+                <div class="stat-icon yellow">
+                    🤖
+                </div>
+
+                <div class="stat-info">
+
+                    <span class="stat-label">
+                        Algorithm
+                    </span>
+
+                    <strong>
+                        ML
+                    </strong>
+
+                    <small>
+                        Classification model
+                    </small>
+
+                </div>
+
+            </div>
+
+        </section>
+
+
+        <section class="content-card">
+
+            <div class="card-header">
+
+                <div>
+
+                    <span class="section-label">
+                        MODEL ANALYSIS
+                    </span>
+
+                    <h2>
+                        📊 Performance Results
+                    </h2>
+
+                </div>
+
+            </div>
+
+
+            {% if result.features %}
+
+            <div class="feature-list">
+
+                <h3>
+                    Features Used
+                </h3>
+
+                {% for feature in result.features %}
+
+                <span class="tag">
+                    {{ feature }}
+                </span>
+
+                {% endfor %}
+
+            </div>
+
+            {% endif %}
+
+
+            {% if result.image %}
+
+            <img src="data:image/png;base64,{{ result.image }}"
+                 alt="{{ result.name }}"
+                 class="result-image">
+
+            {% endif %}
+
+        </section>
+
+
+        {% if result.details %}
+
+        <section class="content-card">
+
+            <div class="card-header">
+
+                <div>
+
+                    <span class="section-label">
+                        DETAILED METRICS
+                    </span>
+
+                    <h2>
+                        🔬 Classification Analysis
+                    </h2>
+
+                </div>
+
+            </div>
+
+
+            {% if result.details.confusion_matrix %}
+
+            <div class="detail-section">
+
+                <h3>
+                    Confusion Matrix
+                </h3>
+
+                <div class="matrix-grid">
+
+                    {% for row in result.details.confusion_matrix %}
+
+                    <div class="matrix-row">
+
+                        {% for value in row %}
+
+                        <div class="matrix-cell">
+                            {{ value }}
+                        </div>
+
+                        {% endfor %}
+
+                    </div>
+
+                    {% endfor %}
+
+                </div>
+
+            </div>
+
+            {% endif %}
+
+
+            {% if result.details.feature_importance %}
+
+            <div class="detail-section">
+
+                <h3>
+                    Feature Importance
+                </h3>
+
+                <div class="result-grid">
+
+                    {% for feature, importance in result.details.feature_importance.items() %}
+
+                    <div class="result-item">
+
+                        <span>
+                            {{ feature }}
+                        </span>
+
+                        <strong>
+                            {{ importance }}
+                        </strong>
+
+                    </div>
+
+                    {% endfor %}
+
+                </div>
+
+            </div>
+
+            {% endif %}
+
+
+            {% if result.details.classification_report %}
+
+            <div class="detail-section">
+
+                <h3>
+                    Classification Report
+                </h3>
+
+                <pre class="code-output">{{ result.details.classification_report }}</pre>
+
+            </div>
+
+            {% endif %}
+
+        </section>
+
+        {% endif %}
+
+        {% endif %}
+
+        {% endif %}
+
+
+
+        <!-- ========================================================= -->
+        <!-- K-MEANS -->
+        <!-- ========================================================= -->
+
+        {% if active == 'k-means' %}
+
+        <section class="page-header">
+
+            <div class="eyebrow">
+                🔵 UNSUPERVISED LEARNING
+            </div>
+
+            <h1>K-Means Clustering</h1>
+
+            <p>
+                Discover groups in the placement dataset using
+                K-Means clustering.
+            </p>
+
+        </section>
+
+
+        {% if result %}
+
+        <section class="stats-grid">
+
+
+            <div class="stat-card">
+
+                <div class="stat-icon blue">
+                    🔵
+                </div>
+
+                <div class="stat-info">
+
+                    <span class="stat-label">
+                        Clusters
+                    </span>
+
+                    <strong>
+                        {{ result.k }}
+                    </strong>
+
+                    <small>
+                        Selected K
+                    </small>
+
+                </div>
+
+            </div>
+
+
+            <div class="stat-card">
+
+                <div class="stat-icon green">
+                    🎯
+                </div>
+
+                <div class="stat-info">
+
+                    <span class="stat-label">
+                        Silhouette
+                    </span>
+
+                    <strong>
+                        {{ result.silhouette }}
+                    </strong>
+
+                    <small>
+                        Cluster quality
+                    </small>
+
+                </div>
+
+            </div>
+
+
+            <div class="stat-card">
+
+                <div class="stat-icon purple">
+                    🗃️
+                </div>
+
+                <div class="stat-info">
+
+                    <span class="stat-label">
+                        Records
+                    </span>
+
+                    <strong>
+                        {{ "{:,}".format(result.rows) }}
+                    </strong>
+
+                    <small>
+                        Clustered records
+                    </small>
+
+                </div>
+
+            </div>
+
+        </section>
+
+
+        <section class="content-card">
+
+            <div class="card-header">
+
+                <div>
+
+                    <span class="section-label">
+                        CLUSTER ANALYSIS
+                    </span>
+
+                    <h2>
+                        🔵 K-Means Visualization
+                    </h2>
+
+                </div>
+
+            </div>
+
+
+            {% if result.image %}
+
+            <img src="data:image/png;base64,{{ result.image }}"
+                 alt="K-Means Clustering"
+                 class="result-image">
+
+            {% endif %}
+
+
+            {% if result.centers %}
+
+            <div class="detail-section">
+
+                <h3>
+                    Cluster Centers
+                </h3>
+
+                <div class="table-wrapper">
+
+                    <table class="data-table">
+
+                        <thead>
+
+                        <tr>
+
+                            <th>
+                                Cluster
+                            </th>
+
+                            {% for feature in result.features %}
+
+                            <th>
+                                {{ feature }}
+                            </th>
+
+                            {% endfor %}
+
+                        </tr>
+
+                        </thead>
+
+                        <tbody>
+
+                        {% for center in result.centers %}
+
+                        <tr>
+
+                            <td>
+                                Cluster {{ loop.index0 }}
+                            </td>
+
+                            {% for value in center %}
+
+                            <td>
+                                {{ value }}
+                            </td>
+
+                            {% endfor %}
+
+                        </tr>
+
+                        {% endfor %}
+
+                        </tbody>
+
+                    </table>
+
+                </div>
+
+            </div>
+
+            {% endif %}
+
+
+            {% if result.counts %}
+
+            <div class="detail-section">
+
+                <h3>
+                    Cluster Counts
+                </h3>
+
+                <div class="result-grid">
+
+                    {% for cluster, count in result.counts.items() %}
+
+                    <div class="result-item">
+
+                        <span>
+                            Cluster {{ cluster }}
+                        </span>
+
+                        <strong>
+                            {{ count }}
+                        </strong>
+
+                    </div>
+
+                    {% endfor %}
+
+                </div>
+
+            </div>
+
+            {% endif %}
+
+        </section>
+
+        {% endif %}
+
+        {% endif %}
+
+
+
+        <!-- ========================================================= -->
+        <!-- ELBOW METHOD -->
+        <!-- ========================================================= -->
+
+        {% if active == 'k-means-elbow' %}
+
+        <section class="page-header">
+
+            <div class="eyebrow">
+                📐 CLUSTER OPTIMIZATION
+            </div>
+
+            <h1>Elbow Method</h1>
+
+            <p>
+                Determine a suitable number of clusters using
+                WCSS analysis.
+            </p>
+
+        </section>
+
+
+        {% if result %}
+
+        <section class="stats-grid">
+
+
+            <div class="stat-card">
+
+                <div class="stat-icon blue">
+                    📐
+                </div>
+
+                <div class="stat-info">
+
+                    <span class="stat-label">
+                        Selected K
+                    </span>
+
+                    <strong>
+                        {{ result.k }}
+                    </strong>
+
+                    <small>
+                        Optimal cluster count
+                    </small>
+
+                </div>
+
+            </div>
+
+
+            <div class="stat-card">
+
+                <div class="stat-icon purple">
+                    🗃️
+                </div>
+
+                <div class="stat-info">
+
+                    <span class="stat-label">
+                        Records
+                    </span>
+
+                    <strong>
+                        {{ "{:,}".format(result.rows) }}
+                    </strong>
+
+                    <small>
+                        Analyzed records
+                    </small>
+
+                </div>
+
+            </div>
+
+        </section>
+
+
+        <section class="content-card">
+
+            <div class="card-header">
+
+                <div>
+
+                    <span class="section-label">
+                        K SELECTION
+                    </span>
+
+                    <h2>
+                        📐 Elbow Curve
+                    </h2>
+
+                </div>
+
+            </div>
+
+
+            {% if result.image %}
+
+            <img src="data:image/png;base64,{{ result.image }}"
+                 alt="Elbow Method"
+                 class="result-image">
+
+            {% endif %}
+
+
+            {% if result.wcss %}
+
+            <div class="detail-section">
+
+                <h3>
+                    WCSS Values
+                </h3>
+
+                <div class="table-wrapper">
+
+                    <table class="data-table">
+
+                        <thead>
+
+                        <tr>
+
+                            <th>
+                                K
+                            </th>
+
+                            <th>
+                                WCSS
+                            </th>
+
+                        </tr>
+
+                        </thead>
+
+                        <tbody>
+
+                        {% for k, value in result.wcss.items() %}
+
+                        <tr>
+
+                            <td>
+                                {{ k }}
+                            </td>
+
+                            <td>
+                                {{ value }}
+                            </td>
+
+                        </tr>
+
+                        {% endfor %}
+
+                        </tbody>
+
+                    </table>
+
+                </div>
+
+            </div>
+
+            {% endif %}
+
+        </section>
+
+        {% endif %}
+
+        {% endif %}
+
+
+
+        <!-- ========================================================= -->
+        <!-- MODEL COMPARISON -->
+        <!-- ========================================================= -->
+
+        {% if active == 'model-comparison' %}
+
+        <section class="page-header">
+
+            <div class="eyebrow">
+                🏆 MODEL EVALUATION
+            </div>
+
+            <h1>Model Comparison</h1>
+
+            <p>
+                Compare the performance of the supervised machine
+                learning models used in VitalSign.
+            </p>
+
+        </section>
+
+
+        {% if results %}
+
+        <section class="content-card">
+
+            <div class="card-header">
+
+                <div>
+
+                    <span class="section-label">
+                        PERFORMANCE
+                    </span>
+
+                    <h2>
+                        🏆 Model Performance Comparison
+                    </h2>
+
+                </div>
+
+            </div>
+
+
+            <div class="table-wrapper">
+
+                <table class="data-table">
+
+                    <thead>
+
+                    <tr>
+
+                        <th>
+                            Model
+                        </th>
+
+                        <th>
+                            Accuracy
+                        </th>
+
+                        <th>
+                            Training Samples
+                        </th>
+
+                        <th>
+                            Testing Samples
+                        </th>
+
+                    </tr>
+
+                    </thead>
+
+                    <tbody>
+
+                    {% for model in results %}
+
+                    <tr>
+
+                        <td>
+                            <strong>
+                                {{ model.name }}
+                            </strong>
+                        </td>
+
+                        <td>
+                            {{ model.accuracy }}%
+                        </td>
+
+                        <td>
+                            {{ "{:,}".format(model.train) }}
+                        </td>
+
+                        <td>
+                            {{ "{:,}".format(model.test) }}
+                        </td>
+
+                    </tr>
+
+                    {% endfor %}
+
+                    </tbody>
+
+                </table>
+
+            </div>
+
+        </section>
+
+
+        <section class="results-grid">
+
+            {% for model in results %}
+
+            {% if model.image %}
+
+            <div class="content-card chart-card">
+
+                <div class="card-header">
+
+                    <div>
+
+                        <span class="section-label">
+                            MODEL
+                        </span>
+
+                        <h2>
+                            {{ model.name }}
+                        </h2>
+
+                    </div>
+
+                </div>
+
+                <img src="data:image/png;base64,{{ model.image }}"
+                     alt="{{ model.name }}"
+                     class="result-image">
+
+            </div>
+
+            {% endif %}
+
+            {% endfor %}
+
+        </section>
+
+        {% else %}
+
+        <section class="content-card">
+
+            <div class="empty-state">
+
+                <div class="empty-icon">
+                    🏆
+                </div>
+
+                <h3>
+                    No comparison results
+                </h3>
+
+                <p>
+                    Model comparison results will appear here.
+                </p>
+
+            </div>
+
+        </section>
+
+        {% endif %}
+
+        {% endif %}
+
+
+
+        <!-- ========================================================= -->
+        <!-- ABOUT -->
+        <!-- ========================================================= -->
+
+        {% if active == 'about' %}
+
+        <section class="page-header">
+
+            <div class="eyebrow">
+                ℹ️ PROJECT INFORMATION
+            </div>
+
+            <h1>About VitalSign</h1>
+
+            <p>
+                Healthcare analytics and machine learning project
+                for understanding patient readmission patterns.
+            </p>
+
+        </section>
+
+
+        <section class="content-card">
+
+            <div class="card-header">
+
+                <div>
+
+                    <span class="section-label">
+                        ABOUT THE PROJECT
+                    </span>
+
+                    <h2>
+                        🏥 VitalSign Healthcare Analytics
+                    </h2>
+
+                </div>
+
+            </div>
+
+
+            <div class="about-content">
+
+                <p>
+                    <strong>VitalSign</strong> is a healthcare
+                    analytics and machine learning application
+                    designed to analyze hospital patient data
+                    and identify useful patterns.
+                </p>
+
+                <p>
+                    The project uses the Diabetes 130-US Hospitals
+                    dataset and applies multiple machine learning
+                    techniques including regression, classification
+                    and clustering.
+                </p>
+
+            </div>
+
+
+            <div class="workflow-grid">
+
+
+                <div class="workflow-card">
+
+                    <div class="workflow-icon">
+                        📊
+                    </div>
+
+                    <h3>
+                        Data Analysis
+                    </h3>
+
+                    <p>
+                        Explore dataset structure, distributions,
+                        missing values and relationships.
+                    </p>
+
+                </div>
+
+
+                <div class="workflow-card">
+
+                    <div class="workflow-icon">
+                        ⚙️
+                    </div>
+
+                    <h3>
+                        Preprocessing
+                    </h3>
+
+                    <p>
+                        Clean and transform data before applying
+                        machine learning algorithms.
+                    </p>
+
+                </div>
+
+
+                <div class="workflow-card">
+
+                    <div class="workflow-icon">
+                        🤖
+                    </div>
+
+                    <h3>
+                        Machine Learning
+                    </h3>
+
+                    <p>
+                        Train regression and classification models
+                        and evaluate their performance.
+                    </p>
+
+                </div>
+
+
+                <div class="workflow-card">
+
+                    <div class="workflow-icon">
+                        🔵
+                    </div>
+
+                    <h3>
+                        Clustering
+                    </h3>
+
+                    <p>
+                        Discover hidden groups in the data using
+                        K-Means clustering.
+                    </p>
+
+                </div>
+
+            </div>
+
+        </section>
+
+        {% endif %}
+
+
+
+        <!-- ========================================================= -->
+        <!-- FOOTER -->
+        <!-- ========================================================= -->
+
+        <footer class="footer">
+
+            <span>
+                © 2026 VitalSign
+            </span>
+
+            <span>
+                Healthcare Analytics & Machine Learning
+            </span>
+
+        </footer>
+
+
+    </main>
+
+</div>
+
+</body>
+
+</html>
